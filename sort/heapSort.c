@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef int elementType;
 
@@ -25,24 +26,35 @@ ptrHeap maxHeapIFY(ptrHeap maxHeap , int i);
 
 elementType * heapSort(elementType a[], const int count);
 
+elementType heapMaxMum(const ptrHeap maxHeap);
+
+elementType heapExtractMax(ptrHeap maxHeap);
+
+bool heapIncreaseKey(ptrHeap maxHeap, int i, elementType key);
+
 int main()
 {
 	int a[] = {5, 3, 17, 10, 84, 19, 6, 22, 9, 33, 22, 3, 23};
 
 	int count = sizeof(a) / sizeof(elementType);
 
-	elementType * sortA = heapSort(a, count);
+	ptrHeap maxHeap = buildMaxHeap(a, count);
 
-	for (int i = 0; i < count; ++i)
-	{
-		printf("%d\n", sortA[i]);
-	}
+	printf("%d\n", maxHeap[parent[2]]);
+	// printf("%d\n", heapExtractMax(maxHeap));
+	// heapIncreaseKey(maxHeap, 2, 100);
+	// elementType * sortA = heapSort(a, count);
+
+	// for (int i = 0; i < count; ++i)
+	// {
+	// 	printf("%d\n", sortA[i]);
+	// }
 
 }
 
 int parent(int i)
 {
-	return (i - 1) / 2;
+	return (i > 1) ? (i - 1) / 2 : 0;
 }
 
 int left(int i)
@@ -108,6 +120,47 @@ ptrHeap maxHeapIFY(ptrHeap maxHeap, int i)
 		return maxHeapIFY(maxHeap, largest);
 	}
 	return maxHeap;
+}
+
+elementType heapMaxMum(const ptrHeap maxHeap)
+{
+	if (maxHeap->heapSize == 0) {
+		return false;
+	}
+	return maxHeap->data[1];
+}
+
+elementType heapExtractMax(ptrHeap maxHeap)
+{
+	if (maxHeap->heapSize == 0) {
+		return false;
+	}
+
+	elementType max = maxHeap->data[0];
+
+	maxHeap->heapSize--;
+	if (maxHeap->heapSize > 1) {
+		exchange(maxHeap->data, 0, maxHeap->heapSize - 1);
+		maxHeapIFY(maxHeap, 0);
+	}
+
+	return max;
+}
+
+bool heapIncreaseKey(ptrHeap maxHeap, int i, elementType key)
+{
+	if (maxHeap->data[i] > key) {
+		return false;
+	}
+
+	int p;
+	while(i > 1 && (p = parent(i)) && maxHeap->data[p] < key) {
+		maxHeap->data[i] = maxHeap->data[p];
+		i = parent(i);
+	}
+
+	maxHeap->data[i] = key;
+	return true;
 }
 
 void exchange(elementType a[], int i, int j)
