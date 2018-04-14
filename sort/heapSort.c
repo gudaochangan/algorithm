@@ -40,7 +40,7 @@ int main()
 
 	ptrHeap maxHeap = buildMaxHeap(a, count);
 
-	printf("%d\n", maxHeap[parent[2]]);
+	// printf("%d\n", maxHeap[parent[2]]);
 	// printf("%d\n", heapExtractMax(maxHeap));
 	// heapIncreaseKey(maxHeap, 2, 100);
 	// elementType * sortA = heapSort(a, count);
@@ -122,6 +122,9 @@ ptrHeap maxHeapIFY(ptrHeap maxHeap, int i)
 	return maxHeap;
 }
 
+/**
+ * 返回最大堆的最大值
+ */
 elementType heapMaxMum(const ptrHeap maxHeap)
 {
 	if (maxHeap->heapSize == 0) {
@@ -130,6 +133,9 @@ elementType heapMaxMum(const ptrHeap maxHeap)
 	return maxHeap->data[1];
 }
 
+/**
+ * 提取最大堆的的最大值
+ */
 elementType heapExtractMax(ptrHeap maxHeap)
 {
 	if (maxHeap->heapSize == 0) {
@@ -147,6 +153,9 @@ elementType heapExtractMax(ptrHeap maxHeap)
 	return max;
 }
 
+/**
+ * 最大堆下标i增值
+ */
 bool heapIncreaseKey(ptrHeap maxHeap, int i, elementType key)
 {
 	if (maxHeap->data[i] > key) {
