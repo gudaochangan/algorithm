@@ -56,6 +56,7 @@ pNode initTree()
 	return root;
 }
 
+
 /**
  * 使用递归的方式
  */
